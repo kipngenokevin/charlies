@@ -1,0 +1,115 @@
+html {
+	scroll-behavior: smooth;
+	overflow-x: hidden;
+}
+
+body {
+	background-color: #131311;
+	color: #79B32B;
+}
+
+table {
+	width: 100%;
+}
+
+td {
+    vertical-align: baseline;
+    font-weight: 800;
+    font-size: medium;
+}
+
+p.medium-size {
+    color: #fff;
+    font-weight: 200;
+}
+
+p.section-subtitle {
+    font-family: "Petit Formal Script", "Pinyon Script", cursive;
+	font-weight: 400;
+	font-style: normal;
+	color: #fff;
+	font-size: 9px;
+}
+
+.section-titles {
+	font-family: "Caveat Brush", cursive;
+	font-weight: 400;
+	font-style: normal;
+	font-size: 30px;
+}
+
+.table-container.white-section {
+    background: #fff;
+    padding: 10px;
+    margin: 0px;
+	color: #000;
+}
+.table-container.green-section {
+    background: #79B32B;
+    color: #fff;
+    padding: 10px;
+	margin-bottom: 10px;
+}
+table.green-table.pastries {
+    width: 100%;
+	line-height: 3.0;
+}
+
+.black-text {
+    color: #000 !important;
+}
+.white-text {
+	color: #fff;
+}
+.center-text {
+	text-align: center;
+}
+
+.divider {
+    border-bottom: 4px dotted white;
+}
+
+.artcaffe-market-slideshow {
+	width: 100%;
+	height: 300px;
+	overflow: hidden;
+	position: relative;
+  }
+  
+  .artcaffe-market-slideshow img,
+  .artcaffe-market-slideshow video {
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	object-fit: cover;
+	transition: transform 1s, opacity 1s;
+  }
+  
+  .artcaffe-market-slideshow img.active,
+  .artcaffe-market-slideshow video.active {
+	opacity: 1;
+	transform: translateX(0);
+  }
+
+@media only screen and (min-width: 768px) and (max-width: 1200px) {
+}
+
+@media only screen and (max-width: 766px) {
+	.section-titles {
+		font-size: 22px;
+	}
+	td {
+		font-size: 12px;
+	}
+	p.medium-size {
+		font-size:10px;
+	}
+	p.section-subtitle {
+		font-size: 8px;
+	}
+	.artcaffe-market-slideshow {
+		height: 120px;
+	}
+}
