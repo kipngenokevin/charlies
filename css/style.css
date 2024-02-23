@@ -68,6 +68,45 @@ table.green-table.pastries {
 .divider {
     border-bottom: 4px dotted white;
 }
+.green-divider {
+    border-bottom: 4px dotted #79B32B;
+}
+
+.large-central-text {
+	font-size: 80px;
+	text-align: center;
+    font-family: sans-serif;
+	font-weight: 700;
+}
+
+.burger-table-container {
+    padding: 10px;
+    border-radius: 8%;
+    border: 5px solid #fff;
+	position: relative;
+	top: -90px;
+	z-index: -1;
+}
+
+.mustard-class {
+    display: flex;
+	gap: 0px;
+	margin-top: 12px;
+}
+.mustard-class-left {
+	background: #fff;
+	padding: 12px;
+	border-radius: 12px;
+}
+.mustard-class-right {
+	position: relative;
+	left: -15px;
+}
+.white-border {
+	border: 5px solid #fff;
+	border-radius: 10px;
+	padding-left: 14px;
+}
 
 .artcaffe-market-slideshow {
 	width: 100%;
@@ -93,7 +132,14 @@ table.green-table.pastries {
 	transform: translateX(0);
   }
 
-@media only screen and (min-width: 768px) and (max-width: 1200px) {
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+	.large-central-text {
+		font-size: 50px;
+	}
+	.mustard-class-left {
+		display: none;
+	}
+	
 }
 
 @media only screen and (max-width: 766px) {
@@ -111,5 +157,15 @@ table.green-table.pastries {
 	}
 	.artcaffe-market-slideshow {
 		height: 120px;
+	}
+	.large-central-text {
+		font-size: 25px;
+	}
+	.burger-table-container {
+		top: -40px;
+		border-radius: 20px;
+	}
+	.mustard-class-left {
+		display: none;
 	}
 }
