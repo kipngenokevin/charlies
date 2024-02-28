@@ -111,6 +111,10 @@ span.smaller-text {
     font-size: x-small;
     font-weight: 400;
 }
+.flex-table-display {
+    display: flex;
+    gap: 5px;
+}
 
 .artcaffe-market-slideshow {
 	width: 100%;
