@@ -107,6 +107,10 @@ table.green-table.pastries {
 	border-radius: 10px;
 	padding-left: 14px;
 }
+span.smaller-text {
+    font-size: x-small;
+    font-weight: 400;
+}
 
 .artcaffe-market-slideshow {
 	width: 100%;
