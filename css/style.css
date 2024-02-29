@@ -71,6 +71,17 @@ table.green-table.pastries {
 .green-divider {
     border-bottom: 4px dotted #79B32B;
 }
+.black-divider {
+    border-bottom: 4px dotted #000;
+}
+.cursive-font {
+    font-size: smaller;
+    font-family: "Caveat Brush", cursive;
+}
+.white-background {
+	background: #fff;
+	color: #000;
+}
 
 .large-central-text {
 	font-size: 80px;
@@ -116,6 +127,18 @@ span.smaller-text {
     gap: 5px;
 }
 
+.bold-large.center-text {
+    font-weight: 800;
+    font-size: 60px;
+}
+.green-background {
+	background: #79B32B;
+	color: #000;
+}
+.right-align-text {
+	text-align: end;
+}
+
 .artcaffe-market-slideshow {
 	width: 100%;
 	height: 300px;
@@ -147,6 +170,10 @@ span.smaller-text {
 	.mustard-class-left {
 		display: none;
 	}
+	.bold-large.center-text {
+		font-weight: 800;
+		font-size: 40px;
+	}
 	
 }
 
@@ -175,5 +202,9 @@ span.smaller-text {
 	}
 	.mustard-class-left {
 		display: none;
+	}
+	.bold-large.center-text {
+		font-weight: 800;
+		font-size: 16px;
 	}
 }
