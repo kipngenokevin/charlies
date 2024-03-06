@@ -80,6 +80,9 @@ table.green-table.pastries {
 .black-divider {
     border-bottom: 4px dotted #000;
 }
+.white-divider {
+	border-bottom: 4px dotted #fff;
+}
 .cursive-font {
     font-size: smaller;
     font-family: "Caveat Brush", cursive;
