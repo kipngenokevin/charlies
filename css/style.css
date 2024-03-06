@@ -37,6 +37,9 @@ p.section-subtitle {
 	font-style: normal;
 	font-size: 30px;
 }
+.thin-caligraph {
+	
+}
 
 .table-container.white-section {
     background: #fff;
@@ -141,6 +144,16 @@ span.smaller-text {
 .right-align-text {
 	text-align: end;
 }
+img.img-responsive.burger-image {
+    height: 50%;
+    width: 50%;
+    position: relative;
+    left: 150px;
+    top: 0px;
+}
+.border-radius-sm {
+	border-radius: 25px;
+}
 
 .artcaffe-market-slideshow {
 	width: 100%;
@@ -181,6 +194,13 @@ span.smaller-text {
 	th.center-text {
 		font-size: 8px;
 	}
+	img.img-responsive.burger-image {
+		height: 50%;
+		width: 50%;
+		position: relative;
+		left: 50px;
+		top: 0px;
+	}
 	
 }
 
@@ -219,5 +239,12 @@ span.smaller-text {
 	}
 	td.center-vertically {
 		vertical-align: middle !important;
+	}
+	img.img-responsive.burger-image {
+		height: 50%;
+		width: 50%;
+		position: relative;
+		left: 50px;
+		top: 0px;
 	}
 }
