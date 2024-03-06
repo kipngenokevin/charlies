@@ -17,6 +17,9 @@ td {
     font-weight: 800;
     font-size: medium;
 }
+th {
+	padding: 2px;
+}
 
 p.medium-size {
     color: #fff;
@@ -212,7 +215,7 @@ img.img-responsive.burger-image {
 		font-size: 22px;
 	}
 	td {
-		font-size: 12px;
+		font-size: 10px;
 	}
 	p.medium-size {
 		font-size:10px;
