@@ -1,0 +1,110 @@
+
+
+.artcaffe-market-slideshow {
+	width: 100%;
+	height: 130px;
+	overflow: hidden;
+	position: relative;
+	margin: 1rem 0;
+    cursor: pointer;
+  }
+  
+  .artcaffe-market-slideshow img,
+  .artcaffe-market-slideshow video {
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	object-fit: cover;
+	transition: transform 1s, opacity 1s;
+  }
+  
+  .artcaffe-market-slideshow img.active,
+  .artcaffe-market-slideshow video.active {
+	opacity: 1;
+	transform: translateX(0);
+  }
+
+  .hidden {
+	display: none;
+  }
+
+  .privacy-class {
+    gap: 1rem;
+  }
+
+  .saf-card {
+    border: none !important;
+  }
+
+  .modal-content {
+    top: 25vh;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 2.5rem;
+    right: 1rem;
+    z-index: 1050;
+  }
+
+  .card {
+    font-family: 'Futura';
+  }
+
+  .step {
+    font-size: medium;
+    font-family: "Futura-Medium";
+    font-weight: 100;
+  }
+
+  .form-check-input[type=radio] {
+	font-size: large;
+  }
+
+  section.safaricom-offers-section {
+	position: relative;
+	margin: 2rem 0;
+  }
+
+  .title-color {
+    color: var(--nav-item-background);
+  }
+
+  .loader {
+	width: 100%;
+	height: 20px;
+	background: 
+	  radial-gradient(circle 10px,#3aa335 95%,#0000 )  right /calc(200% + 20px) 100%,
+	  linear-gradient(#3aa335 0 0) center/100% 4px; 
+	background-repeat: no-repeat; 
+	-webkit-mask: radial-gradient(circle 4px,#3aa335 93%, #3aa335 ) right/calc(200% + 20px) 100%;
+	animation: l6 1s infinite linear;
+	
+  }
+  @keyframes l6 {
+	100% {background-position: left;-webkit-mask-position:left}
+  }
+
+
+  @media only screen and (min-width: 768px) and (max-width: 1200px){
+    .artcaffe-market-slideshow {
+		min-height: 200px;
+	}
+  }
+
+@media only screen and (min-width: 1201px) {
+	.btn-category {
+		font-size: larger;
+	}
+
+	.subcategory a {
+		font-size: larger;
+	}
+
+	.artcaffe-market-slideshow {
+		min-height: 300px;
+	}
+
+  }

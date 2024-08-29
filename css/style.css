@@ -4,8 +4,8 @@ html {
 }
 
 body {
-	background-color: #131311;
-	color: #79B32B;
+	background-color: #131311 !important;
+	color: #79B32B !important;
 }
 
 table {

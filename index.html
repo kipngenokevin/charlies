@@ -4,13 +4,16 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Charlie's Bistro Kenya</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	<link href="css/style.css" rel="stylesheet">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="css/new-menu.css">
+	<link rel="stylesheet" href="css/offer-css.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<!-- SCRIPTS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Petit+Formal+Script&family=Pinyon+Script&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Petit+Formal+Script&family=Pinyon+Script&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
 	<div class="container">
@@ -2784,6 +2787,148 @@
 			</div>
 		</div>
 	</div>
+
+	<section class="safaricom-offers-section">
+		<div class="container">
+			<!-- SAFARICOM OFFERS -->
+			<section class="safaricom-offers">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-sm-12 d-flex justify-content-center">
+											<img class="img-fluid" src="https://artcaffemenu.gigastreammedia.net/images/SAF-MAIN-LOGO.png" width="30%">
+										</div>
+									</div>
+									<h6 class="card-title"><b>Get Incredible Data Offers</b></h6>
+									<div id="errorMessage" class="text-danger" style="display: none;"></div>
+									<div id="spinner" class="loader" role="status" style="display: none"></div> 
+
+									<!-- STEP 1 DETAIL CONFIRMATION  -->
+									<div class="step" data-step="1">
+										<label for="phoneNumber" class="form-label">Please Enter your phone
+											number.</label>
+										<input type="text" class="form-control" id="phoneNumber" placeholder="0XXXXXXXXX" required>
+										<div class="invalid-feedback">
+											Please enter your phone number.
+										</div>
+										<div class="row mt-2">
+											<div class="col-12 privacy-class d-flex justify-content-between align-items-center">
+												<label for="privacyCheckbox ">By tapping confirm you agree to our <a href="https://artcaffemenu.gigastreammedia.net/data-privacy-statement" target="_blank">data privacy statement</a>.</label>
+											</div>
+										</div>
+										<div class="invalid-feedback">
+											Kindly confirm that you agree to the Data Privacy Statement.
+										</div>
+										<div class="row mt-2">
+											<div class="col-6">
+												<button class="btn btn-success"
+													onclick="nextStep()">CONFIRM</button>
+											</div>
+										</div>
+									</div>
+									<!-- STEP 1 FETCH  DATA OFFERS -->
+									<div class="step hidden" data-step="2">
+										<h6 class="card-subtitle mb-2 text-muted">Choose Offer</h6>
+										<div class="offer-list" id="offerContainer">
+											<!-- Data will dynamically appear here -->
+										</div>
+										<div class="row mt-2">
+											<div class="col-6">
+												<button class="btn btn-outline-success"
+													onclick="prevStep()">CANCEL</button>
+											</div>
+											<div class="col-6">
+												<button class="btn btn-success"
+													onclick="nextStep()">CONFIRM</button>
+											</div>
+										</div>
+									</div>
+
+
+
+
+									<!-- STEP 3 SELECT PAYMENT METHOD -->
+									<div class="step hidden" data-step="3">
+										<h6 class="card-subtitle mb-2 text-muted">Choose Payment Method</h6>
+										<div class="offer-list">
+											<div class="offer-card" onclick="selectPaymentMethod('airtime')">
+												<input class="offer-input" type="radio" name="paymentMethod" id="airtime" value="airtime" checked>
+												<label class="offer-label" for="airtime">Airtime</label>
+											</div>
+											<div class="offer-card" onclick="selectPaymentMethod('mpesa')">
+												<input class="offer-input" type="radio" name="paymentMethod" id="mpesa" value="mpesa">
+												<label class="offer-label" for="mpesa">Mpesa</label>
+											</div>
+										</div>
+													
+										<div class="row mt-2">
+											<div class="col-6">
+												<button class="btn btn-outline-success"
+													onclick="prevStep()">CANCEL</button>
+											</div>
+											<div class="col-6 d-flex ">
+												<button class="btn btn-success"
+													onclick="nextStep()">CONFIRM</button>
+											</div>
+										</div>
+									</div>
+
+									<!-- STEP 4 CONFIRMATION -->
+									<!-- STEP 4 CONFIRMATION -->
+                                    <div class="step hidden" data-step="4">
+                                        <h6 id="confirmationMessage">You will receive an SMS confirmation shortly.</h6>
+                                    </div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</section>
+
+	<script>
+			var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+			if (isSafari) {
+				var videos = document.getElementsByClassName("video");
+				for (var i = 0; i < videos.length; i++) {
+					videos[i].style.display = "none";
+				}
+			} else {
+				var imgs = document.getElementsByClassName("img");
+				for (var j = 0; j < imgs.length; j++) {
+					imgs[j].style.display = "none";
+				}
+			}
+
+
+			window.addEventListener("DOMContentLoaded", function () {
+				var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+				var slideshows = document.querySelectorAll("#artcaffe-market-slideshow");
+
+				slideshows.forEach(function (slideshow) {
+					var slideIndex = 0;
+					var slides = isSafari ? slideshow.querySelectorAll(".img") : slideshow.querySelectorAll(".video");
+
+					function nextSlide() {
+						slides[slideIndex].classList.remove("active");
+						slideIndex = (slideIndex + 1) % slides.length;
+						slides[slideIndex].classList.add("active");
+					}
+
+					setInterval(nextSlide, 9000);
+				});
+			});
+	</script>
+	<script src="js/offersStyle.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+	<script type="module" src="/js/index.js"></script>
 	
 </body>
 </html>
