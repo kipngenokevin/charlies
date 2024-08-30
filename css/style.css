@@ -20,6 +20,9 @@ td {
 th {
 	padding: 2px;
 }
+th:first-child {
+	text-align: left !important;
+}
 
 p.medium-size {
     color: #fff;
