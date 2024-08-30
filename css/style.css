@@ -214,11 +214,14 @@ img.img-responsive.burger-image {
 	.section-titles {
 		font-size: 22px;
 	}
+	th {
+		text-align: end !important;
+	}
 	td {
-		font-size: 10px;
+		font-size: small;
 	}
 	p.medium-size {
-		font-size:10px;
+		font-size:12px;
 	}
 	p.section-subtitle {
 		font-size: 8px;
