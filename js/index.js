@@ -4,23 +4,56 @@ import fetchOffers from "./fetchOffers.js";
 import showStep from "./showStep.js";
 import updateOfferSelection from "./updateOfferSelection.js";
 import sendPurchaseData from "./sendPurchaseData.js";
+import { hardCodedOffers } from "./hardcodedOffers.js";
+import mergeOffersWithoutDuplicates from "./mergeOffers.js";
 
 let currentStep = 1;
 let offersData = null;
 let accessToken = null;
 let msisdn = null;
+let allOffers = [];
+let requestInProgress = false; // Flag to prevent duplicate requests
 
 $(document).ready(function() {
     showStep(currentStep);
     window.nextStep = nextStep;
     window.prevStep = prevStep;
+    window.selectPaymentMethod = selectPaymentMethod;
+
+    $('#offerContainer').on('click', '.offer-card', function() {
+        if (currentStep === 2) {
+            // Show the spinner and disable the offer cards
+            $('#spinner').show();
+            // $('.offer-card').css('pointer-events', 'none'); // Disable clicking on other cards
+    
+            const selectedOffer = $(this).find('input[name="dataOffer"]').val();
+            $('input[name="dataOffer"][value="' + selectedOffer + '"]').prop('checked', true);
+    
+            // Simulate a delay to allow the spinner to show (if needed)
+            setTimeout(function() {
+                // Check if the current step is still 2 before transitioning to the next step
+                if (currentStep === 2) {
+                    currentStep++;
+                    showStep(currentStep);
+                }
+    
+                // Hide the spinner and re-enable interaction
+                $('#spinner').hide();
+                $('.offer-card').css('pointer-events', 'auto'); // Enable clicking again
+            }, 1000); // Adjust delay as needed
+        }
+    });
+    
 });
 
 window.nextStep = async function() {
+    if (requestInProgress) return; // Prevent multiple requests
+    requestInProgress = true;
+
     // Show the spinner and disable the button to prevent multiple clicks
     $('#spinner').show();
     $('#nextStepButton').prop('disabled', true);
-    $('#errorMessage').hide();  // Hide the error message if it was shown before
+    $('#errorMessage').hide(); // Hide the error message if it was shown before
 
     // Ensure the spinner is visible for at least 2 seconds
     const spinnerDelay = new Promise((resolve) => setTimeout(resolve, 1000));
@@ -31,23 +64,20 @@ window.nextStep = async function() {
 
             if (!phoneNumber) {
                 alert('Please input your phone number.');
+                requestInProgress = false;
                 return;
             }
 
-            // Remove any non-numeric characters
+            // Clean up and format the phone number
             phoneNumber = phoneNumber.replace(/\D/g, '');
-
-            // Check if the phone number already starts with '254'
             if (!phoneNumber.startsWith('254')) {
-                // If not, prepend '254' and remove leading zero if present
-                if (phoneNumber.startsWith('0')) {
-                    phoneNumber = phoneNumber.substring(1);
-                }
+                if (phoneNumber.startsWith('0')) phoneNumber = phoneNumber.substring(1);
                 phoneNumber = '254' + phoneNumber;
             }
 
             if (phoneNumber.length < 10) {
                 alert('Phone number is too short. Please enter a valid number.');
+                requestInProgress = false;
                 return;
             }
 
@@ -58,26 +88,21 @@ window.nextStep = async function() {
 
             try {
                 accessToken = await getAccessToken(username, password);
-                // console.log('Access Token:', accessToken);
                 const offers = await fetchOffers(accessToken, msisdn);
-                // console.log("Received offers", offers);
                 offersData = offers.lineItem.characteristicsValue;
+                allOffers = mergeOffersWithoutDuplicates(offersData, hardCodedOffers);
                 await spinnerDelay; // Ensure spinner is shown for 2 seconds
-                updateOfferSelection(offersData);
+                updateOfferSelection(allOffers);
                 currentStep++;
                 showStep(currentStep);
             } catch (error) {
-                console.error('Failed to obtain access token or fetch offers:', error);
-                $('#spinner').hide();
-                $('#nextStepButton').prop('disabled', false);
-                $('#errorMessage').text('Service currently unavailable, please try again later.').show(); // Display error message
+                $('#errorMessage').text('Service currently unavailable, please try again later.').show();
             }
         } else if (currentStep === 2) {
             const selectedOffer = $('input[name="dataOffer"]:checked').val();
             if (!selectedOffer) {
                 alert('Please select an offer.');
-                $('#spinner').hide();
-                $('#nextStepButton').prop('disabled', false);
+                requestInProgress = false;
                 return;
             }
 
@@ -86,31 +111,20 @@ window.nextStep = async function() {
             showStep(currentStep);
         } else if (currentStep === 3) {
             const selectedOffer = $('input[name="dataOffer"]:checked').val();
-            // console.log('Selected Offer:', selectedOffer);
-
-            const selectedOfferData = offersData.find(offer => offer.offerName === selectedOffer);
+            const selectedOfferData = allOffers.find(offer => offer.offerName === selectedOffer);
 
             if (!selectedOfferData) {
                 alert('Selected offer details not found. Please try again.');
-                console.error('Selected offer data not found:', selectedOffer);
-                $('#spinner').hide();
-                $('#nextStepButton').prop('disabled', false);
+                requestInProgress = false;
                 return;
             }
 
             const paymentMode = $('input[name="paymentMethod"]:checked').val();
-
             if (!paymentMode) {
                 alert('Please select a payment method.');
-                $('#spinner').hide();
-                $('#nextStepButton').prop('disabled', false);
+                requestInProgress = false;
                 return;
             }
-
-            const accountId = selectedOfferData.resourceAccId;
-            const price = selectedOfferData.offerPrice;
-            const resourceAmount = selectedOfferData.resourceValue;
-            const validity = selectedOfferData.offerValidity;
 
             try {
                 const purchaseResponse = await makePurchase(
@@ -118,59 +132,41 @@ window.nextStep = async function() {
                     msisdn,
                     selectedOfferData.offeringId,
                     paymentMode,
-                    accountId,
-                    price,
-                    resourceAmount,
-                    validity
+                    selectedOfferData.resourceAccId,
+                    selectedOfferData.offerPrice,
+                    selectedOfferData.resourceValue,
+                    selectedOfferData.offerValidity
                 );
-                // console.log('Purchase response:', purchaseResponse);
                 $('#confirmationMessage').text(purchaseResponse.header.customerMessage || 'You will receive an SMS confirmation shortly or a prompt to enter your M-PESA PIN if you selected M-PESA as your mode of payment.');
-                alert('Kindly wait as we process your request.');
-
-                // call the external function to send purchase data
-                const purchaseData = {
+                //alert('Kindly wait as we process your request.');
+                
+                await sendPurchaseData({
                     selectedOffer,
                     paymentMode,
-                    price,
-                    resourceAmount,
-                    validity,
+                    price: selectedOfferData.offerPrice,
+                    resourceAmount: selectedOfferData.resourceValue,
+                    validity: selectedOfferData.offerValidity,
                     customerMessage: purchaseResponse.header.customerMessage || 'You will receive an SMS confirmation shortly.',
-                };
-
-                try {
-                    await sendPurchaseData(purchaseData);
-                } catch (error) {
-                    // Handle the error if needed or display a user-friendly message
-                    console.error('Failed to process purchase data:', error);
-                }
+                    source: "Artcaffe Main Menu", 
+                });
                 
-                await spinnerDelay; // Ensure spinner is shown for 2 seconds
+                await spinnerDelay;
                 currentStep++;
                 showStep(currentStep);
                 setTimeout(() => {
                     currentStep = 1;
                     showStep(currentStep);
-                    $('#spinner').hide();  // Hide spinner after process
-                    $('#nextStepButton').prop('disabled', false);
                 }, 5000);
             } catch (error) {
-                alert(`Failed to make purchase: ${error.message}`);
-                console.error('Failed to make purchase:', error);
-                $('#spinner').hide();
-                $('#nextStepButton').prop('disabled', false);
-                $('#errorMessage').text('Service currently unavailable, please try again later.').show(); // Display error message
+                $('#errorMessage').text('Service currently unavailable, please try again later.').show();
             }
         }
     } finally {
-        // Hide the spinner and re-enable the button regardless of the outcome
         $('#spinner').hide();
         $('#nextStepButton').prop('disabled', false);
+        requestInProgress = false; // Reset the flag after completion
     }
 };
-
-
-
-
 
 window.prevStep = function() {
     if (currentStep > 1) {
@@ -179,5 +175,14 @@ window.prevStep = function() {
     }
 };
 
+function selectPaymentMethod(paymentMethod) {
+    $('input[name="paymentMethod"][value="' + paymentMethod + '"]').prop('checked', true);
+    $('#spinner').show();
+    $('#nextStepButton').prop('disabled', true);
+    $('#errorMessage').hide();
 
-
+    // Prevent duplicate requests by checking the flag
+    if (!requestInProgress) {
+        setTimeout(nextStep, 1000);
+    }
+}
